@@ -1,0 +1,54 @@
+factory:
+  name: "AI Factory"
+  version: "1.0.0"
+
+api:
+  provider: "anthropic"
+  default_model: "claude-sonnet-4-6"
+  max_tokens: 4096
+
+pipeline:
+  base_path: "pipeline"
+  stages:
+    - "0_inbox"
+    - "1_planning"
+    - "2_ready"
+    - "3_in_progress"
+    - "4_review"
+    - "5_rework"
+    - "6_completed"
+    - "7_archived"
+
+agents:
+  foreman:
+    # Sonnet — умная модель для декомпозиции и планирования
+    # (Opus можно включить: claude-opus-4-6 — дороже но качественнее)
+    model: "claude-sonnet-4-6"
+    max_turns: 15
+  supervisor:
+    # Sonnet — баланс цена/качество для ревью кода
+    model: "claude-sonnet-4-6"
+    max_turns: 10
+    approval_threshold: 7.0
+    max_attempts: 3
+  workers:
+    # Haiku — дешёвая и быстрая для массового выполнения задач
+    default_model: "claude-haiku-4-5-20251001"
+    batch_model: "claude-haiku-4-5-20251001"
+    max_turns: 10
+    max_parallel: 5
+
+server:
+  host: "127.0.0.1"
+  port: 5050
+
+watcher:
+  mode: "polling"
+  interval_seconds: 2
+
+workspace:
+  base_path: "workspace"
+
+costs:
+  daily_budget_usd: 10.0
+  per_task_budget_usd: 2.0

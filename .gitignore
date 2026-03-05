@@ -1,0 +1,31 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Runtime data (don't commit)
+pipeline/0_inbox/*.json
+pipeline/1_planning/*.json
+pipeline/2_ready/*.json
+pipeline/3_in_progress/*.json
+pipeline/4_review/*.json
+pipeline/5_rework/*.json
+pipeline/6_completed/*.json
+pipeline/7_archived/*.json
+pipeline/**/*.lock
+workspace/
+registry/agents.json
+registry/dashboard.json
+registry/cost_log.jsonl
+
+# IDE
+.vscode/
+*.code-workspace
+
+# OS
+Thumbs.db
+.DS_Store
