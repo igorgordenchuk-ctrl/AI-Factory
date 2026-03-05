@@ -170,7 +170,12 @@ def main():
     state_machine = StateMachine(pipeline_root)
     skill_registry = SkillRegistry(BASE_DIR / "config" / "skills")
     token_tracker = TokenTracker(BASE_DIR / "registry" / "cost_log.jsonl")
-    agent_factory = AgentFactory(skill_registry, token_tracker, BASE_DIR / "registry" / "agents.json")
+    workers_cfg = agents_cfg.get("workers", {})
+    agent_factory = AgentFactory(
+        skill_registry, token_tracker,
+        BASE_DIR / "registry" / "agents.json",
+        default_worker_model=workers_cfg.get("default_model", ""),
+    )
     parallel_mgr = ParallelManager(max_workers=agents_cfg.get("workers", {}).get("max_parallel", 5))
 
     console.print(f"[green]Навыки загружены:[/green] {', '.join(skill_registry.all_ids())}")

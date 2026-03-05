@@ -75,8 +75,8 @@ class AgentFactory:
             ]
             agent_name = " & ".join(skill_names) if skill_names else "Worker"
 
-        # Определяем модель по навыкам
-        model = self.skill_registry.model_for_skills(required_skills)
+        # Определяем модель: config override → skill preference → default
+        model = self.default_worker_model or self.skill_registry.model_for_skills(required_skills)
 
         worker = Worker(
             agent_id=agent_id,
